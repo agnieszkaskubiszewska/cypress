@@ -3,4 +3,4 @@ dist/
 build/
 .env
 config.js
-cypress.env.js
+cypress.env.json
