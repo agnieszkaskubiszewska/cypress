@@ -1,7 +1,7 @@
 import faker from "faker";
 
 describe("Przykładowy test Cypress", () => {
-  it("Logowanie na stronie Sauce Demo", () => {
+  it("Logowanie na stronie sklepu", () => {
     const randomUsername = faker.internet.userName();
     cy.visit("/", {
       retryOnStatusCodeFailure: true,
