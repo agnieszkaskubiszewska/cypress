@@ -1,19 +1,20 @@
-import faker from "faker";
-
-describe("Przykładowy test Cypress", () => {
-  it("Logowanie na stronie sklepu", () => {
-    const randomUsername = faker.internet.userName();
+describe("Logowanie do sklepu", () => {
+  beforeEach(() => {
     cy.visit("/", {
       retryOnStatusCodeFailure: true,
       retryOnNetworkFailure: true,
       retry: 2,
     });
-    cy.get("#signin2").click();
-    cy.get("#sign-username").type(randomUsername);
-    cy.get("#sign-password").click().type(Cypress.env("password"), {log:false});
-    cy.get(
-      "#signInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary"
-    ).click();
+  });
+
+  it("Wprowadzenie danych do logowania", () => {
+    const user = Cypress.env("LOGIN") || Cypress.env("user");
+    const password = Cypress.env("PASSWORD") || Cypress.env("password");
+
+    cy.get("#login2").click();
+    cy.get("#loginusername").type(user, { delay: 10 });
+    cy.get("#loginpassword").click().type(password, { log: false });
+    cy.get('#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary').click();
 
     cy.on("window:alert", (text) => {
       expect(text).to.eql('Sign up successful.');
