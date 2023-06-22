@@ -22,4 +22,10 @@ jobs:
         run: npm install
 
       - name: Run Cypress tests
-        run: npm run cypress:run
+        env:
+          LOGIN: ${{ secrets.LOGIN }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: |
+          echo "Login: $LOGIN"
+          echo "Password: $PASSWORD"
+          npm run cypress:run
