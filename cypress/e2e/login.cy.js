@@ -9,8 +9,8 @@ describe("Logowanie do sklepu", () => {
 
   it("Wprowadzenie danych do logowania", () => {
     cy.get("#login2").click();
-    cy.get("#loginusername").type(Cypress.env("user"), { delay: 10 });
-    cy.get("#loginpassword").click().type(Cypress.env("password"), { log: false });
+    cy.get("#loginusername").type(Cypress.env("LOGIN"), { delay: 10 });
+    cy.get("#loginpassword").click().type(Cypress.env("PASSWORD"), { log: false });
     cy.get('#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary').click();
 
     cy.on("window:alert", (text) => {
@@ -18,4 +18,3 @@ describe("Logowanie do sklepu", () => {
     });
   });
 });
-
