@@ -2,22 +2,15 @@ name: Cypress Tests
 
 on:
   push:
-    branches:
-      - main
-      - feature/*
+
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        branch: [main, feature/*]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -34,4 +27,4 @@ jobs:
         run: |
           echo "Login: $LOGIN"
           echo "Password: $PASSWORD"
-          npm run cypress:run -- --branch ${{ matrix.branch }}
+          npm run cypress:run
