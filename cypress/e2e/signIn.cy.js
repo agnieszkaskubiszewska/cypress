@@ -1,19 +1,23 @@
 import faker from "faker";
 
+import SignIn from "../pageObjects/signInPage";
+
+
 describe("Przykładowy test Cypress", () => {
-  it("Logowanie na stronie sklepu", () => {
+  const signIn = new SignIn();
+
+  it("Zakladanie konta na stronie sklepu", () => {
     const randomUsername = faker.internet.userName();
     cy.visit("/", {
       retryOnStatusCodeFailure: true,
       retryOnNetworkFailure: true,
       retry: 2,
     });
-    cy.get("#signin2").click();
-    cy.get("#sign-username").type(randomUsername);
-    cy.get("#sign-password").click().type(Cypress.env("password"), {log:false});
-    cy.get(
-      "#signInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary"
-    ).click();
+
+    signIn.signInButton().click()
+    signIn.email().type(randomUsername);
+    signIn.password().click().type(Cypress.env("password"), {log:false});
+    signIn.signInModalBtn().click()
 
     cy.on("window:alert", (text) => {
       expect(text).to.eql('Sign up successful.');
