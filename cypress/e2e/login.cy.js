@@ -1,4 +1,8 @@
+import LogIn from '../pageObjects/logInPage';
+
 describe("Logowanie do sklepu", () => {
+  const logIn = new LogIn();
+
   beforeEach(() => {
     cy.visit("/", {
       retryOnStatusCodeFailure: true,
@@ -11,10 +15,10 @@ describe("Logowanie do sklepu", () => {
     const user = Cypress.env("LOGIN") || Cypress.env("user");
     const password = Cypress.env("PASSWORD") || Cypress.env("password");
 
-    cy.get("#login2").click();
-    cy.get("#loginusername").type(user, { delay: 10 });
-    cy.get("#loginpassword").click().type(password, { log: false });
-    cy.get('#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary').click();
+    logIn.logInBtn().click();
+    logIn.email().type(user, { delay: 50 });
+    logIn.password().click().type(password, { log: false });
+    logIn.logInModalBtn().click();
 
     cy.on("window:alert", (text) => {
       expect(text).to.eql('Sign up successful.');
