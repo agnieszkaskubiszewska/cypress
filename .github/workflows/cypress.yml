@@ -2,6 +2,8 @@ name: Cypress Tests
 
 on:
   push:
+    branches:
+      - master
 
 
 jobs:
@@ -11,6 +13,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.before }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -25,6 +32,8 @@ jobs:
           LOGIN: ${{ secrets.LOGIN }}
           PASSWORD: ${{ secrets.PASSWORD }}
         run: |
+          COMMIT_SHA=${{ github.event.before }}
+          echo "Running tests for commit: $COMMIT_SHA"
           echo "Login: $LOGIN"
           echo "Password: $PASSWORD"
           npm run cypress:run
