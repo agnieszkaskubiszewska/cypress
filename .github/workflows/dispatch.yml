@@ -1,0 +1,28 @@
+name: Manual Test Trigger
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Nazwa gałęzi'
+        required: true
+        default: 'main' 
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Run Cypress tests
+        env:
+          LOGIN: ${{ secrets.LOGIN }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: |
+          BRANCH=${{ github.event.inputs.branch }}
+          echo "Testing branch: $BRANCH"
+          COMMIT_SHA=${{ github.event.before }}
+          echo "Running tests for commit: $COMMIT_SHA"
+          echo "Login: $LOGIN"
+          echo "Password: $PASSWORD"
+          npm run cypress:run
