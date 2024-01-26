@@ -34,4 +34,5 @@ class HomePage {
     cy.get(".tbodyid").should("not.be.empty");
   }
 }
+
 export default HomePage;
